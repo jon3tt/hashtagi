@@ -3,28 +3,40 @@
 ## 🔍 Rakenne ja sisältö
 
 - 📂 Root kansio
-- 📔 build.bat (windows)
-- 📔 build.sh (linux)
+- 🕔 build.bat (windows)
+- 🕔 build.sh (linux)
     - 📂 networks
-        - 📄 redis_network.yml
+        - 🕄 redis_network.yml
     - 📂 services
         - 📂 api
         - 📂 backend
         - 📂 database
         - 📂 frontend
-        - 📂 proxy
-          - 📄 docker-compose.yml
-          - 📄 Dockerfile
-          - 📂 certs
-          - 📂 configs
-            - 📄 nginx.conf
-            - 📂 sites-enabled
-              - 📄 default.conf
-        - 📂 redis
-            - 📄 docker-compose.yml
-            - 📄 Dockerfile
+            - 🕄 docker-compose.yml
+            - 🕄 Dockerfile
+            - 📂 app
+                - 🕄 package.json
+                - 📂 public
+                    - 🕄 index.html
+                - 📂 src
+                    - 🕄 App.js
+                    - 🕄 index.js
             - 📂 configs
-                - 📄 redis.conf
+                - 🕄 nginx.conf
+
+        - 📂 proxy
+            - 🕄 docker-compose.yml
+            - 🕄 Dockerfile
+            - 📂 certs
+            - 📂 configs
+                - 🕄 nginx.conf
+                - 📂 sites-enabled
+                    - 🕄 default.conf
+        - 📂 redis
+            - 🕄 docker-compose.yml
+            - 🕄 Dockerfile
+            - 📂 configs
+                - 🕄 redis.conf
     - 📂 volumes
         - 📂 redis_data
 
@@ -56,21 +68,41 @@ Jokaisella palvelulla (api, backend, database jne.) on oma erillinen kansionsa. 
 
 ---
 
-### 3. **redis (docker-compose.yml, Dockerfile)**
+### 3. **frontend (React + Nginx)**
+Frontend-palvelussa on React-sovellus, joka palvellaan Nginxin kautta. Kansioiden rakenne on optimoitu sekä kehitys- että tuotantokäyttöön.
+- **Dockerfile:** Määrittelee Reactin rakennuksen ja tuotantovaiheen Nginxin kanssa.
+- **docker-compose.yml:** Sisältää kehityksen voluumit ja verkkoasetukset.
+- **configs/nginx.conf:** Nginxin konfiguraatiotiedosto, joka ohjaa kaikki pyynnöt oikein Reactin root-diviin.
+- **app:** Sisältää React-projektin tiedostot.
+
+> **Huom:** Voluumi mahdollistaa kehityksen ilman jatkuvaa uudelleenrakennusta.
+
+---
+
+### 4. **redis (docker-compose.yml, Dockerfile)**
 Redis-palvelun kansiossa hallitaan sen Dockerfile ja tarvittavat asetukset.
-- **Dockerfile** määrittelee, miten Redis rakennetaan.
-- **docker-compose.yml** sisältää palvelun riippuvuudet, verkkoasetukset ja volyymit.
+- **Dockerfile:** Määrittelee, miten Redis rakennetaan.
+- **docker-compose.yml:** Sisältää palvelun riippuvuudet, verkkoasetukset ja volyymit.
 
 > **Vinkki:** Entry-point-skripti voidaan lisätä hallitsemaan dynaamisia asetuksia, jos ympäristömuuttujia tarvitaan.
 
 ---
 
-### 4. **configs (redis.conf)**
+### 5. **configs (redis.conf)**
 Redis-palvelun tärkeät konfiguraatiot sijaitsevat configs-kansiossa. Tämä rakenne mahdollistaa konfiguraation helpon vaihtamisen eri ympäristöjen välillä, esimerkiksi dev, test ja prod.
 
 ---
 
-### 5. **volumes**
+### 6. **proxy (Nginx-proxy)**
+Proxy-palvelu käsittele kaikki sisääntulevat pyynnöt ja ohjaa ne oikeisiin palveluihin porttien mukaan.
+- **Portti 80/443:** Ohjaa pyynnöt frontend-palveluun.
+- **Portti 8008:** Ohjaa pyynnöt backend-palveluun.
+- **Portti 8009:** Ohjaa pyynnöt API-palveluun.
+- **configs/sites-enabled/default.conf:** Sisältää väliaikaisten reititysten asetukset kehitystä varten.
+
+---
+
+### 7. **volumes**
 Volyymit-kansio on hyödyllinen silloin, kun palvelut tarvitsevat pysyvää tallennustilaa. Esimerkiksi Redis tallentaa datansa **redis_data**-kansioon, jolloin tiedot säilyvät konttien uudelleenkäynnistyksissä.
 
 > **Varmista:** Docker Compose -tiedostossa volyymit on liitetty oikein, jotta data tallentuu pysyvästi.

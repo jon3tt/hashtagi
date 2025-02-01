@@ -1,2 +1,4 @@
 .idea/
 volumes/redis_data/
+services/frontend/app/node_modules/
+services/frontend/app/package-lock.json

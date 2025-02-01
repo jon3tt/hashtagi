@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: .
+    container_name: frontend
+    networks:
+      - redis_network
+    volumes:
+      - ./app/src:/app/src    # Vain lähdekoodi
+      - ./app/public:/app/public  # Vain julkiset tiedostot
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "80:80"
+      - "443:443"
+
+networks:
+  redis_network:
+    external: true
