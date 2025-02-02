@@ -12,9 +12,6 @@ services:
       - ./app/public:/app/public  # Vain julkiset tiedostot
     environment:
       - NODE_ENV=development
-    ports:
-      - "80:80"
-      - "443:443"
 
 networks:
   redis_network:

@@ -8,3 +8,6 @@ docker-compose -f services/redis/docker-compose.yml up -d
 
 # Käynnistä proxy
 docker-compose -f services/proxy/docker-compose.yml up -d
+
+# Käynnistä frontend
+docker-compose -f services/frontend/docker-compose.yml up -d
