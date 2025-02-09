@@ -1,13 +1,25 @@
 import React from 'react';
+import { Image, Container, Row, Col, } from "react-bootstrap";
 
-function Home(){
+import { Placeholder } from "../Components/Panels";
+import { PageHeading } from "../Components/Heading";
+
+function Home() {
     return (
-        <div className="container-fluid">
-            <div className="row row-cols-2 row-cols-sm-1">
-                <div className="col"><h1>Etusivu</h1></div>
-                <div className="col"><p>Tämä on etusivu 😅😅.</p></div>
-            </div>
-        </div>
+        <>
+            <title>#Etusivu</title>
+            <Placeholder
+                height={"250px"}
+                content={<PageHeading color="text-white" text="Etusivu"/>}
+            />
+            <Container fluid>
+                <Row xs={1}>
+                    <Col>
+                        <p>Tämä on Etusivu :D</p>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     );
 }
 

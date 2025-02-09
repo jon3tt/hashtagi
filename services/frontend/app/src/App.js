@@ -1,5 +1,5 @@
 /* Järjestelmän komponentit, jotka mahdollistavat reitityksen eri sivujen välillä */
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 
 /* Sivujen komponentit, joita reititetään sovelluksessa */
 import Home from "./Home/Home";
@@ -11,8 +11,8 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 /* Sovelluksen pääkomponentti, joka sisältää reitityksen ja navigointipalkin */
 export default function App() {
     return (
-        // Router-komponentti hallinnoi sovelluksen reititystä
-        <Router>
+        <>
+            <title>Häshtägi</title>
             {/* Container navigointipalkille, joka käyttää koko näytön leveyttä */}
             <Container fluid className="p-0 m-0" as="main">
                 {/* Bootstrapin Navbar-komponentti pääsivuston navigointiin */}
@@ -34,7 +34,7 @@ export default function App() {
             </Container>
 
             {/* Container, joka sisältää reititetyt sivut */}
-            <Container as="main">
+            <Container fluid as="main">
                 <Routes>
                     {/* Etusivun reitti */}
                     <Route path="/" element={<Home />} />
@@ -42,6 +42,6 @@ export default function App() {
                     <Route path="/blog" element={<Blog />} />
                 </Routes>
             </Container>
-        </Router>
+        </>
     );
 }

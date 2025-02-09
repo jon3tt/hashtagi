@@ -1,11 +1,23 @@
 import React from 'react';
+import { Row, Col } from "react-bootstrap";
+
+import { PageHeading } from "../Components/Heading";
+import { Placeholder } from "../Components/Panels";
 
 function Blog() {
     return (
-        <div>
-            <h1>Blogi Sivu</h1>
-            <p>Tämä on Blogi sivu. Jee 🤣🤣🤣</p>
-        </div>
+        <>
+            <title>#Blogi</title>
+            <Placeholder
+                height="250px"
+                content={<PageHeading color="text-white" text="Blogi"/> }
+            />
+            <Row>
+                <Col>
+                    Tämä on blogi sivu :D
+                </Col>
+            </Row>
+        </>
     );
 }
 
