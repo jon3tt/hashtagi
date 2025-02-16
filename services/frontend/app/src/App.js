@@ -1,17 +1,27 @@
 import { Routes, Route, Link } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { useLocalization } from "./Components/Localization"; // Käytetään lokalisaatiota
+import { useLocalization } from "./Components/useLocalization"; // Käytetään lokalisaatiota
 
 import Home from "./Home/Home";
 import Blog from "./Blog/Blog";
 import News from "./News/News";
-import {Placeholder} from "./Components/Panels";
-import {PageHeading} from "./Components/Heading";
+import { Placeholder } from "./Components/Panels";
+import { PageHeading } from "./Components/Heading";
 import Spinner from "react-bootstrap/Spinner";
+import { HouseDoorFill, PenFill, Newspaper } from "react-bootstrap-icons";
 import React from "react";
+import {useCookie} from "./Components/Cookie";
+
+
 
 export default function App() {
-    const strings = useLocalization("fi"); // Haetaan kieli
+
+    const [ language, setLanguage, deleteLanguage ] = useCookie("language", "/");
+    const expiration = new Date();
+    expiration.addHours(2).addMinutes(30);
+    setLanguage("fi", expiration);
+
+    const { strings } = useLocalization();
 
     // Odotetaan, että kielitiedosto on ladattu ennen kuin renderöidään sisältö
     if (!strings) {
@@ -34,9 +44,18 @@ export default function App() {
                     <Navbar.Toggle className="me-2" aria-controls="NavBar" />
                     <Navbar.Collapse id="NavBar">
                         <Nav className="mx-3 d-flex flex-row justify-content-around border-1-white-bottom">
-                            <Nav.Link as={Link} to="/">{strings.page_home_name || "XXX"}</Nav.Link>
-                            <Nav.Link as={Link} to="/blog">{strings.page_blog_name || "XXX"}</Nav.Link>
-                            <Nav.Link as={Link} to="/news">{strings.page_news_name || "XXX"}</Nav.Link>
+                            <Nav.Link as={Link} to="/">
+                                <HouseDoorFill className="me-3"/>
+                                {strings.page_home_name || "XXX"}
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/blog">
+                                <PenFill className="me-3"/>
+                                {strings.page_blog_name || "XXX"}
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/news">
+                                <Newspaper className="me-3"/>
+                                {strings.page_news_name || "XXX"}
+                            </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

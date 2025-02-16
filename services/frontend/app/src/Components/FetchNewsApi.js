@@ -1,10 +1,12 @@
 import React from "react";
 import Spinner from "react-bootstrap/Spinner";
-import { Col, Row, ListGroup, Container, Button } from "react-bootstrap";
-import { getLocalization } from "./Localization"; // Hakee kielidatan
+import { ListGroup, Button } from "react-bootstrap";
+import { getLocalization } from "./useLocalization";
+import { getCookie } from "./Cookie";
 import { FetchLang } from "./FetchLang";
 import { Placeholder } from "./Panels";
-import { PageHeading } from "./Heading"; // Hakee kielitiedoston
+import { PageHeading } from "./Heading";
+
 
 export default class FetchNewsApi extends React.Component {
     constructor(props) {
@@ -16,11 +18,13 @@ export default class FetchNewsApi extends React.Component {
             isLoaded: false,
             items: [],
             strings: null, // Alustetaan tyhjällä arvolla
+            lang: getCookie("language") === "" ? "fi": getCookie("language")
         };
     }
 
     async componentDidMount() {
         const addr = this.endpoint + this.apikey;
+        const lang = this.state.lang;
         try {
             const res = await fetch(addr);
             const result = await res.json();
@@ -30,8 +34,8 @@ export default class FetchNewsApi extends React.Component {
         }
 
         // Haetaan kielitiedosto ja päivitetään tila
-        await FetchLang("fi");
-        const strings = await getLocalization("fi");
+        await FetchLang(lang);
+        const strings = await getLocalization(lang);
         this.setState({ strings });
     }
 

@@ -1,0 +1,14 @@
+{
+  "authors": [
+    {
+      "name": "jon3tt",
+      "email": "jon3tt@gmail.com"
+    }
+  ],
+  "description": "backend for react-app",
+  "license": "proprietary",
+  "minimum-stability": "stable",
+  "name": "backend/app",
+  "require": {
+  }
+}

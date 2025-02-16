@@ -5,10 +5,10 @@ import {Row, Col, Container} from "react-bootstrap";
 import { PageHeading } from "../Components/Heading";
 import { Placeholder } from "../Components/Panels";
 import { UpdatePageTitle } from "../Components/UpdatePageTitle";
-import { useLocalization } from "../Components/Localization";
+import { useLocalization } from "../Components/useLocalization";
 
 function Blog() {
-    const strings = useLocalization("fi");
+    const { strings } = useLocalization();
     if (!strings) {
         return (
             <Placeholder

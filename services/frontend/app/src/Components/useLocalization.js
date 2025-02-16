@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import LocalizedStrings from "react-localization";
 import { FetchLang } from "./FetchLang";
+import { useCookie } from "./Cookie";
+
+import LocalizedStrings from "react-localization";
+
 
 let localizationInstance = new LocalizedStrings({fi: {}});
 let isLoaded = false; // Muuttuja latauksen tilan seuraamiseen
@@ -17,24 +20,24 @@ async function fetchLanguage(lang = "fi") {
     }
 }
 
-export function useLocalization(lang = "fi") {
-    const [strings, setStrings] = useState(null); // Odotetaan latausta
+export function useLocalization() {
+    const [lang, setLang] = useCookie("language", "/"); // Haetaan kieli evästeestä
+    const [strings, setStrings] = useState(null);
 
     useEffect(() => {
+        const selectedLang = lang || "fi"; // Oletuskieli "fi", jos ei löydy evästeestä
+
         async function updateStrings() {
-            await fetchLanguage(lang);
+            await fetchLanguage(selectedLang);
             setStrings(localizationInstance);
         }
 
-        if (!isLoaded) {
-            updateStrings();
-        } else {
-            setStrings(localizationInstance);
-        }
-    }, [lang]);
+        updateStrings();
+    }, [lang]); // Lataa kielitiedoston aina, kun `lang` muuttuu
 
-    return strings; // Jos kieli ei ole ladattu, palauttaa `null`
+    return { strings, lang, setLang }; // Palauttaa kielitiedot ja kielen asetusfunktion
 }
+
 
 export async function getLocalization(lang = "fi") {
     await fetchLanguage(lang); // Odotetaan, että tiedot latautuvat

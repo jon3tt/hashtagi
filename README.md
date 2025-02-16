@@ -31,10 +31,11 @@
                     - 📂 Blog
                         - 🕄 Blog.js
                     - 📂 Components
+                        - 🕄 Cookie.js
                         - 🕄 FetchLang.js
                         - 🕄 FetchNewsApi.js
                         - 🕄 Heading.js
-                        - 🕄 Localization.js
+                        - 🕄 useLocalization.js
                         - 🕄 Panels.js
                         - 🕄 UpdatePageTitle.js
                     - 📂 Home
@@ -98,7 +99,7 @@ Frontend-palvelussa on React-sovellus, joka palvellaan Nginxin kautta. Kansioide
 > **Huom:** Voluumi mahdollistaa kehityksen ilman jatkuvaa uudelleenrakennusta.
 
 Lisäksi:
-- **`src/Components/Localization.js`** hallitsee Reactin kielitiedostojen latausta asynkronisesti.
+- **`src/Components/useLocalization.js`** hallitsee Reactin kielitiedostojen latausta asynkronisesti.
 - **`src/Components/FetchLang.js`** hakee kielitiedostot API:sta.
 - **`src/Components/FetchNewsApi.js`** suorittaa API-kutsuja uutispalveluun.
 
