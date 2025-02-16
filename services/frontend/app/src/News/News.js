@@ -1,15 +1,14 @@
+/* News.js */
 import React from 'react';
-import { Container, Row, Col, } from "react-bootstrap";
-
-import { Placeholder } from "../Components/Panels";
-import { PageHeading } from "../Components/Heading";
-
-import { UpdatePageTitle } from "../Components/UpdatePageTitle";
+import {UpdatePageTitle} from "../Components/UpdatePageTitle";
 import { useLocalization } from "../Components/Localization";
+import {Placeholder} from "../Components/Panels";
+import {PageHeading} from "../Components/Heading";
+import FetchNewsApi from "../Components/FetchNewsApi";
+import {Col, Container, Row} from "react-bootstrap";
 
-function Home() {
+function News (){
     const strings = useLocalization("fi");
-
     if (!strings) {
         return (
             <Placeholder
@@ -19,17 +18,18 @@ function Home() {
         );
     }
 
-    UpdatePageTitle(strings.page_home_name);
+    UpdatePageTitle(strings.page_news_name);
 
     return (
         <>
             <Placeholder
                 height={"250px"}
-                content={<PageHeading color="text-white" text={strings.page_home_name}/>}/>
+                content={<PageHeading color="text-white" text={strings.page_news_name}/>}
+            />
             <Container fluid>
                 <Row xs={1}>
                     <Col>
-                        <p>Tämä on Etusivu :D</p>
+                        <FetchNewsApi/>
                     </Col>
                 </Row>
             </Container>
@@ -37,4 +37,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default News;

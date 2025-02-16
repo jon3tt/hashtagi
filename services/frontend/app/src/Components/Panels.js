@@ -4,8 +4,8 @@ function Placeholder ({height = "100%", content}){
     const style = {
         "height": `${height}`,
         "display": "flex",
-        "justify-content": "center",
-        "align-items": "center"
+        "justifyContent": "center",
+        "alignItems": "center"
     };
     return (
         <Row className="bg-dark">

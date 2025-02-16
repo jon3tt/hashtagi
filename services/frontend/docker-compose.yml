@@ -8,11 +8,10 @@ services:
     networks:
       - redis_network
     volumes:
-      - ./app/src:/app/src    # Vain lähdekoodi
-      - ./app/public:/app/public  # Vain julkiset tiedostot
+      - ./app/src:/app/src:rw    # Vain lähdekoodi
+      - ./app/public:/app/public:rw  # Vain julkiset tiedostot
     environment:
       - NODE_ENV=development
-
 networks:
   redis_network:
     external: true

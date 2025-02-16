@@ -1,45 +1,53 @@
-/* Järjestelmän komponentit, jotka mahdollistavat reitityksen eri sivujen välillä */
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from "react-router-dom";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { useLocalization } from "./Components/Localization"; // Käytetään lokalisaatiota
 
-/* Sivujen komponentit, joita reititetään sovelluksessa */
 import Home from "./Home/Home";
 import Blog from "./Blog/Blog";
+import News from "./News/News";
+import {Placeholder} from "./Components/Panels";
+import {PageHeading} from "./Components/Heading";
+import Spinner from "react-bootstrap/Spinner";
+import React from "react";
 
-/* Bootstrap-komponentit navigointia ja ulkoasua varten */
-import { Container, Nav, Navbar } from "react-bootstrap";
-
-/* Sovelluksen pääkomponentti, joka sisältää reitityksen ja navigointipalkin */
 export default function App() {
+    const strings = useLocalization("fi"); // Haetaan kieli
+
+    // Odotetaan, että kielitiedosto on ladattu ennen kuin renderöidään sisältö
+    if (!strings) {
+        return (
+            <Placeholder
+                height="50px"
+                content={<PageHeading color="text-white" text={<Spinner animation="grow" variant="primary"/>}/>}
+            />
+        );
+    }
+
     return (
         <>
-            <title>Häshtägi</title>
-            {/* Container navigointipalkille, joka käyttää koko näytön leveyttä */}
-            <Container fluid className="p-0 m-0" as="main">
-                {/* Bootstrapin Navbar-komponentti pääsivuston navigointiin */}
-                <Navbar expand="lg">
-                    {/* Sivuston brändin nimi */}
-                    <Navbar.Brand href="#">Hästägi</Navbar.Brand>
-
-                    {/* Toggler-kuvake pienten näyttöjen navigointia varten */}
-                    <Navbar.Toggle aria-controls="NavBar" />
-
-                    {/* Navigointilinkit (Etusivu ja Blogi) */}
+            {/* Container navigointipalkille */}
+            <Container fluid className="p-0 m-0 fixed-bottom" as="main">
+                <Navbar bg="dark" data-bs-theme="dark" expand="xs">
+                    <Navbar.Brand as="span" className="navbar-brand mb-0 ps-3 h1">
+                        {strings.appTitle || "XXX"}
+                    </Navbar.Brand>
+                    <Navbar.Toggle className="me-2" aria-controls="NavBar" />
                     <Navbar.Collapse id="NavBar">
-                        <Nav className="me-auto">
-                            <Nav.Link as={Link} to="/">Etusivu</Nav.Link>
-                            <Nav.Link as={Link} to="/blog">Blogi</Nav.Link>
+                        <Nav className="mx-3 d-flex flex-row justify-content-around border-1-white-bottom">
+                            <Nav.Link as={Link} to="/">{strings.page_home_name || "XXX"}</Nav.Link>
+                            <Nav.Link as={Link} to="/blog">{strings.page_blog_name || "XXX"}</Nav.Link>
+                            <Nav.Link as={Link} to="/news">{strings.page_news_name || "XXX"}</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
             </Container>
 
-            {/* Container, joka sisältää reititetyt sivut */}
-            <Container fluid as="main">
+            {/* Container reititettäville sivuille */}
+            <Container fluid as="main" className="mb-5">
                 <Routes>
-                    {/* Etusivun reitti */}
-                    <Route path="/" element={<Home />} />
-                    {/* Blogi-sivun reitti */}
-                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/"         element={<Home />} />
+                    <Route path="/blog"     element={<Blog />} />
+                    <Route path="/news"     element={<News />} />
                 </Routes>
             </Container>
         </>

@@ -18,9 +18,29 @@
                 - 🕄 package.json
                 - 📂 public
                     - 🕄 index.html
+                    - 📂 ui
+                        - 📂 css
+                            - 🕄 app.css
+                        - 📂 gallery
+                            - 🖼️ favicon.webp
+                        - 📂 lang
+                            - 🕄 fi.json
                 - 📂 src
                     - 🕄 App.js
                     - 🕄 index.js
+                    - 📂 Blog
+                        - 🕄 Blog.js
+                    - 📂 Components
+                        - 🕄 FetchLang.js
+                        - 🕄 FetchNewsApi.js
+                        - 🕄 Heading.js
+                        - 🕄 Localization.js
+                        - 🕄 Panels.js
+                        - 🕄 UpdatePageTitle.js
+                    - 📂 Home
+                        - 🕄 Home.js
+                    - 📂 News
+                        - 🕄 Home.js
             - 📂 configs
                 - 🕄 nginx.conf
 
@@ -77,6 +97,11 @@ Frontend-palvelussa on React-sovellus, joka palvellaan Nginxin kautta. Kansioide
 
 > **Huom:** Voluumi mahdollistaa kehityksen ilman jatkuvaa uudelleenrakennusta.
 
+Lisäksi:
+- **`src/Components/Localization.js`** hallitsee Reactin kielitiedostojen latausta asynkronisesti.
+- **`src/Components/FetchLang.js`** hakee kielitiedostot API:sta.
+- **`src/Components/FetchNewsApi.js`** suorittaa API-kutsuja uutispalveluun.
+
 ---
 
 ### 4. **redis (docker-compose.yml, Dockerfile)**
@@ -110,23 +135,11 @@ Volyymit-kansio on hyödyllinen silloin, kun palvelut tarvitsevat pysyvää tall
 ## 🔧 Laajentaminen ja mukauttaminen
 
 - **Ympäristökohtaiset asetukset:** Luo configs-kansioon alikansiot (esim. **dev**, **prod**, **test**) ympäristökohtaisia asetuksia varten.
-    - Tämä mahdollistaa esimerkiksi tuotanto- ja kehitysympäristöjen erilaisten asetusten helpon hallinnan.
 
-- **Palvelukohtaiset kirjastot:** Voit sijoittaa palvelukohtaiset kirjastot ja riippuvuudet palvelujen sisälle, esimerkiksi näin:
-    - **services/api**
-        - **src** (lähdekoodi)
-        - **vendor** (esim. Composer- tai NPM-riippuvuudet)
-        - **config** (palvelun asetukset)
-
-## 🔑 Yhteenveto
-Tämä kansiorakenne tukee skaalautuvaa ja selkeää järjestelmän hallintaa. Se mahdollistaa palveluiden, konfiguraatioiden ja volyymien hallinnan tehokkaasti niin kehityksessä kuin tuotannossa. Pidä rakenteen peruslogiikka yksinkertaisena, mutta riittävän joustavana mahdollisille laajennuksille.
+- **Palvelukohtaiset kirjastot:** Voit sijoittaa palvelukohtaiset kirjastot ja riippuvuudet palvelujen sisälle.
 
 ## 📌 Hyödylliset komennot
 
-- **Yhdistä Redis-palveluun kontissa:**
-  ```bash
-  docker exec -it redis_service sh
-  ```
 - **Tarkista Redis-palvelimen tila:**
   ```bash
   redis-cli info persistence
